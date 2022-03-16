@@ -7,5 +7,7 @@
     <string name="back">Back</string>
     <string name="email_hint">E-mail address</string>
     <string name="password_hint">Password</string>
+    <string name="registerCaps">REGISTER</string>
+    <string name="name_hint">Full Name</string>
 
 </resources>
