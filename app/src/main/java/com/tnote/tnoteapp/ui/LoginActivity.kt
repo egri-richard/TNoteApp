@@ -1,4 +1,4 @@
-package com.tnote.tnoteapp
+package com.tnote.tnoteapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
