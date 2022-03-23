@@ -35,9 +35,6 @@ class ApplicationActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         setupActionBarWithNavController(navController ,appBarConfiguration)
 
-        listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
-
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.tnote.tnoteapp.R
+import com.tnote.tnoteapp.databinding.ItemNoteBinding
 import com.tnote.tnoteapp.models.Note
 
 class NotesAdapter: RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
-    inner class NoteViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class NoteViewHolder(val binding: ItemNoteBinding): RecyclerView.ViewHolder(binding.root)
 
     private val differCallback = object : DiffUtil.ItemCallback<Note>() {
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
@@ -25,18 +27,28 @@ class NotesAdapter: RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
     val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-
-            )
-        )
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemNoteBinding.inflate(layoutInflater, parent, false)
+        return NoteViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val note = differ.currentList[position]
+        holder.binding.apply {
+            tvNoteTitle.text = note.title
+            setOnItemClickListener {
+                onItemClickListener?.let { it(note) }
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return differ.currentList.size
+    }
+
+    private var onItemClickListener: ((Note) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Note) -> Unit) {
+        onItemClickListener = listener
     }
 }
