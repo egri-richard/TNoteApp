@@ -1,22 +1,23 @@
 package com.example.retrofittest2.network
 
-import com.example.retrofittest2.SessionManager
 import com.example.retrofittest2.network.models.*
-import retrofit2.Call
+import com.tnote.tnoteapp.models.LoginRequest
+import com.tnote.tnoteapp.models.Note
+import com.tnote.tnoteapp.models.RegistrationRequest
+import com.tnote.tnoteapp.models.UserResponse
 import retrofit2.Response
 import retrofit2.http.*
-import java.sql.Time
 
 interface TNoteApi {
 
     @POST(Constants.LOGIN_URL)
-    suspend fun login(@Body request: LoginRequest) : Response<LoginResponse>
+    suspend fun login(@Body request: LoginRequest) : Response<UserResponse>
 
     @POST(Constants.LOGOUT_URL)
-    suspend fun logout(@Header("Authorization") token: String) : Response<LogoutResponse>
+    suspend fun logout(@Header("Authorization") token: String) : Response<String>
 
     @POST(Constants.REGISTER_URL)
-    suspend fun register(@Body request: RegistrationRequest) : Response<RegistrationResponse>
+    suspend fun register(@Body request: RegistrationRequest) : Response<UserResponse>
 
     @GET(Constants.USERNOTES_URL)
     suspend fun getNotes(
