@@ -1,4 +1,4 @@
-package com.example.retrofittest2.network
+package com.tnote.tnoteapp.api
 
 object Constants {
     const val BASE_URL = "https://tnote-backend-app.herokuapp.com/api/"

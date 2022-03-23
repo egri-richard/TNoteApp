@@ -1,4 +1,4 @@
-package com.example.retrofittest2.network
+package com.tnote.tnoteapp.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

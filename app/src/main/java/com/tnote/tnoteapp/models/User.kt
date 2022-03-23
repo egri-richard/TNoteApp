@@ -1,4 +1,4 @@
-package com.example.retrofittest2.network.models
+package com.tnote.tnoteapp.models
 
 data class User(
     var id: Int,

@@ -1,10 +1,6 @@
-package com.example.retrofittest2.network
+package com.tnote.tnoteapp.api
 
-import com.example.retrofittest2.network.models.*
-import com.tnote.tnoteapp.models.LoginRequest
-import com.tnote.tnoteapp.models.Note
-import com.tnote.tnoteapp.models.RegistrationRequest
-import com.tnote.tnoteapp.models.UserResponse
+import com.tnote.tnoteapp.models.*
 import retrofit2.Response
 import retrofit2.http.*
 
