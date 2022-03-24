@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
                     hideProgressBar()
                     Snackbar.make(
                         binding.root,
-                        "Unexpected Error",
+                        "Wrong Credentials",
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
