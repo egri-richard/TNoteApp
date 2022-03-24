@@ -6,15 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.tnote.tnoteapp.api.ApiInstance
 import com.tnote.tnoteapp.models.Note
 import com.tnote.tnoteapp.util.Resource
+import com.tnote.tnoteapp.util.SessionManager
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class ApplicationViewModel: ViewModel() {
+class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
     val notesListFragmentState: MutableLiveData<Resource<List<Note>>> = MutableLiveData()
 
     init {
-        //TODO: get user data and token into viewmodel somehow
-        getNotes()
+        getNotes(
+            sessionManager.getUserId(),
+            sessionManager.getAuthToken()
+        )
     }
 
     fun getNotes(userId: Int, token: String) = viewModelScope.launch {

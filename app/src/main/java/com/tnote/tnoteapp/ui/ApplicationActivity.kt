@@ -2,8 +2,8 @@ package com.tnote.tnoteapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,10 +13,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.databinding.ActivityApplicationBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
+import com.tnote.tnoteapp.util.ApplicationViewModelFactory
+import com.tnote.tnoteapp.util.SessionManager
 
 class ApplicationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityApplicationBinding
     lateinit var viewModel: ApplicationViewModel
+    lateinit var sessionManager: SessionManager
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -27,7 +30,9 @@ class ApplicationActivity : AppCompatActivity() {
         binding = ActivityApplicationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ApplicationViewModel()
+        sessionManager = SessionManager(this)
+        val applicationViewModelFactory = ApplicationViewModelFactory(sessionManager)
+        viewModel = ViewModelProvider(this, applicationViewModelFactory).get(ApplicationViewModel::class.java)
 
         navController = findNavController(R.id.appNavHostFragment)
 
