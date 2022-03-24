@@ -6,6 +6,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -19,10 +20,12 @@ import com.tnote.tnoteapp.util.SessionManager
 class ApplicationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityApplicationBinding
     lateinit var viewModel: ApplicationViewModel
-    lateinit var sessionManager: SessionManager
+lateinit var sessionManager: SessionManager
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +37,8 @@ class ApplicationActivity : AppCompatActivity() {
         val applicationViewModelFactory = ApplicationViewModelFactory(sessionManager)
         viewModel = ViewModelProvider(this, applicationViewModelFactory).get(ApplicationViewModel::class.java)
 
-        navController = findNavController(R.id.appNavHostFragment)
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.appNavHostFragment) as NavHostFragment
+        navController = navHostFragment.navController
 
         drawerLayout = findViewById(R.id.drawerLayout)
         binding.navigationView.setupWithNavController(navController)
@@ -45,7 +49,6 @@ class ApplicationActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.appNavHostFragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

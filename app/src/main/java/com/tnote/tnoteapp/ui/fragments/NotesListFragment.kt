@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.adapters.NotesAdapter
@@ -34,6 +35,17 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ApplicationActivity).viewModel
+        setupRV()
+
+        notesAdapter.setOnItemClickListener {
+            val selectedNote = Bundle().apply {
+                putSerializable("note", it)
+            }
+            findNavController().navigate(
+                R.id.action_notesListFragment_to_noteFragment,
+                selectedNote
+            )
+        }
 
         viewModel.notesListFragmentState.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
@@ -59,7 +71,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
     private fun setupRV() {
         notesAdapter = NotesAdapter()
         binding.rvNotes.apply {
-            adapter = NotesAdapter()
+            adapter = notesAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }

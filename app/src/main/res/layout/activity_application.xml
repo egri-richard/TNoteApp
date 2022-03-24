@@ -8,7 +8,7 @@
     tools:openDrawer="start"
     tools:context=".ui.ApplicationActivity">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/appNavHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"

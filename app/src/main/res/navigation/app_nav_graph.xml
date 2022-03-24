@@ -30,7 +30,11 @@
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.tnote.tnoteapp.ui.fragments.NoteFragment"
-        android:label="NoteFragment" />
+        android:label="NoteFragment" >
+        <argument
+            android:name="note"
+            app:argType="com.tnote.tnoteapp.models.Note" />
+    </fragment>
     <fragment
         android:id="@+id/timetableFragment"
         android:name="com.tnote.tnoteapp.TimetableFragment"
