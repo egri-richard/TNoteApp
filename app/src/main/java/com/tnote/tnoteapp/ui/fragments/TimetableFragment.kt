@@ -11,6 +11,7 @@ import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.databinding.FragmentTimetableBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
 import com.tnote.tnoteapp.ui.ApplicationActivity
+import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
 
 class TimetableFragment: Fragment(R.layout.fragment_timetable) {
@@ -43,7 +44,13 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
             sessionManager.getAuthToken()
         )
 
-
+        viewModel.timetableFragmentState.observe(viewLifecycleOwner) {
+            when(it) {
+                is Resource.Success -> {}
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+            }
+        }
     }
 
     override fun onDestroyView() {
