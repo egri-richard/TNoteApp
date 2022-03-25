@@ -59,7 +59,7 @@ interface TNoteApi {
     ) : Response<Timetable>
 
     @GET(Constants.SELECTEDTIMETABLE)
-    suspend fun showTimetable(
+    suspend fun getSelectedTimetable(
         @Path("id") id: Int,
         @Header("Authorization") token: String,
     ) : Response<List<TTElement>>

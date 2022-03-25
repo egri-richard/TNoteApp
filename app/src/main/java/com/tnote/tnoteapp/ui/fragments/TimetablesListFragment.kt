@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.R
@@ -43,6 +44,16 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
             sessionManager.getUserId(),
             sessionManager.getAuthToken()
         )
+
+        timetablesAdapter.setOnItemClickListener {
+            val timetableId = Bundle().apply {
+                putInt("timetableId", it.id!!)
+            }
+            findNavController().navigate(
+                R.id.action_timetablesListFragment_to_timetableFragment,
+                timetableId
+            )
+        }
 
         viewModel.timetablesListFragmentState.observe(viewLifecycleOwner) {
             when(it) {

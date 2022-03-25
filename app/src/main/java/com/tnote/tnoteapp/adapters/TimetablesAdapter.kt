@@ -38,9 +38,7 @@ class TimetablesAdapter: RecyclerView.Adapter<TimetablesAdapter.TimetableViewHol
         }
 
         holder.itemView.setOnClickListener {
-            setOnItemClickListener {
-                onItemClickListener?.let { it(timetable) }
-            }
+            onItemClickListener?.let { it(timetable) }
         }
     }
 

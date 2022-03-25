@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tnote.tnoteapp.api.ApiInstance
 import com.tnote.tnoteapp.models.Note
+import com.tnote.tnoteapp.models.TTElement
 import com.tnote.tnoteapp.models.Timetable
 import com.tnote.tnoteapp.models.User
 import com.tnote.tnoteapp.util.Resource
@@ -16,6 +17,7 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
     val notesListFragmentState: MutableLiveData<Resource<List<Note>>> = MutableLiveData()
     val timetablesListFragmentState: MutableLiveData<Resource<List<Timetable>>> = MutableLiveData()
     val accountFragmentState: MutableLiveData<Resource<User>> = MutableLiveData()
+    val timetableFragmentState: MutableLiveData<Resource<List<TTElement>>> = MutableLiveData()
 
     init {
         getNotes(
@@ -38,6 +40,12 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         timetablesListFragmentState.postValue(Resource.Loading())
         val response = ApiInstance.api.getTimetables(userId, token)
         timetablesListFragmentState.postValue(handleTimetablesResponse(response))
+    }
+
+    fun getSelectedTimetable(timetableId: Int, token: String) = viewModelScope.launch {
+        timetableFragmentState.postValue(Resource.Loading())
+        val response = ApiInstance.api.getSelectedTimetable(timetableId, token)
+        timetableFragmentState.postValue(handleSelectedTimetableResponse(response))
     }
 
     fun getCurrentUser(userId: Int, token: String) = viewModelScope.launch {
@@ -69,6 +77,15 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
     }
 
     private fun handleCurrentUserResponse(response: Response<User>) : Resource<User> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message(), null)
+    }
+
+    private fun handleSelectedTimetableResponse(response: Response<List<TTElement>>): Resource<List<TTElement>> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)

@@ -45,7 +45,11 @@
         android:id="@+id/timetableFragment"
         android:name="com.tnote.tnoteapp.ui.fragments.TimetableFragment"
         android:label="fragment_timetable"
-        tools:layout="@layout/fragment_timetable" />
+        tools:layout="@layout/fragment_timetable" >
+        <argument
+            android:name="timetableId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.tnote.tnoteapp.ui.fragments.AccountFragment"
