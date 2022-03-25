@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.R
+import com.tnote.tnoteapp.adapters.TTElementsAdapter
+import com.tnote.tnoteapp.adapters.TimetablesAdapter
 import com.tnote.tnoteapp.databinding.FragmentTimetableBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
 import com.tnote.tnoteapp.ui.ApplicationActivity
@@ -19,6 +23,8 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
     val binding get() = _binding!!
 
     lateinit var viewModel: ApplicationViewModel
+    lateinit var ttElementsAdapter: TTElementsAdapter
+
     lateinit var sessionManager: SessionManager
 
     val args: TimetableFragmentArgs by navArgs()
@@ -35,6 +41,7 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ApplicationActivity).viewModel
+        setupRV()
         sessionManager = SessionManager(requireContext())
 
         val timetableId = args.timetableId
@@ -46,9 +53,23 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
 
         viewModel.timetableFragmentState.observe(viewLifecycleOwner) {
             when(it) {
-                is Resource.Success -> {}
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    hideProgressBar()
+                    it.data?.let { list ->
+                        ttElementsAdapter.differ.submitList(list)
+                    }
+                }
+                is Resource.Error -> {
+                    hideProgressBar()
+                    Snackbar.make(
+                        binding.root,
+                        "Unexpected Error",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
             }
         }
     }
@@ -56,5 +77,21 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun setupRV() {
+        ttElementsAdapter = TTElementsAdapter()
+        binding.rvTTElements.apply {
+            adapter = ttElementsAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+    }
+
+    private fun hideProgressBar() {
+        binding.fragmentTimetableProgressBar.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        binding.fragmentTimetableProgressBar.visibility = View.VISIBLE
     }
 }
