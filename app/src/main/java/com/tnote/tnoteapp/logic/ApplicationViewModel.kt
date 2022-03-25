@@ -30,6 +30,10 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         notesListFragmentState.postValue(handleNotesResponse(response))
     }
 
+    fun updateNote(noteId: Int, token: String, body: Note) = viewModelScope.launch {
+        ApiInstance.api.updateNote(noteId, token, body)
+    }
+
     fun getTimetables(userId: Int, token: String) = viewModelScope.launch {
         timetablesListFragmentState.postValue(Resource.Loading())
         val response = ApiInstance.api.getTimetables(userId, token)

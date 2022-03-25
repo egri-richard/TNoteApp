@@ -37,7 +37,7 @@ class TimetablesAdapter: RecyclerView.Adapter<TimetablesAdapter.TimetableViewHol
             tvTimetableName.text = timetable.name
         }
 
-        holder.itemView.apply {
+        holder.itemView.setOnClickListener {
             setOnItemClickListener {
                 onItemClickListener?.let { it(timetable) }
             }

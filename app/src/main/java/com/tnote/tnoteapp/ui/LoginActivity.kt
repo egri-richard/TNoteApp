@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.databinding.ActivityLoginBinding
 import com.tnote.tnoteapp.logic.LoginViewModel
@@ -36,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
             )
         }
 
-        loginViewModel.loginActivityState.observe(this, Observer { response ->
+        loginViewModel.loginActivityState.observe(this) { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -65,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
                     showProgressBar()
                 }
             }
-        })
+        }
     }
 
     private fun hideProgressBar() {
