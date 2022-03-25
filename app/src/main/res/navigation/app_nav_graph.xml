@@ -43,12 +43,12 @@
     </fragment>
     <fragment
         android:id="@+id/timetableFragment"
-        android:name="com.tnote.tnoteapp.TimetableFragment"
+        android:name="com.tnote.tnoteapp.ui.fragments.TimetableFragment"
         android:label="fragment_timetable"
         tools:layout="@layout/fragment_timetable" />
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.tnote.tnoteapp.AccountFragment"
+        android:name="com.tnote.tnoteapp.ui.fragments.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
