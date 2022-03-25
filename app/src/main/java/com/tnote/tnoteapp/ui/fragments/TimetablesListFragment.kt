@@ -14,7 +14,6 @@ import com.tnote.tnoteapp.logic.ApplicationViewModel
 import com.tnote.tnoteapp.ui.ApplicationActivity
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
-import java.util.*
 
 class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
     private var _binding: FragmentTimetableslistBinding? = null
@@ -38,7 +37,7 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ApplicationActivity).viewModel
         setupRV()
-        sessionManager = SessionManager(view.context)
+        sessionManager = SessionManager(requireContext())
 
         viewModel.getTimetables(
             sessionManager.getUserId(),

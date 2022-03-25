@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tnote.tnoteapp.R
@@ -15,12 +14,15 @@ import com.tnote.tnoteapp.databinding.FragmentNoteslistBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
 import com.tnote.tnoteapp.ui.ApplicationActivity
 import com.tnote.tnoteapp.util.Resource
+import com.tnote.tnoteapp.util.SessionManager
 
 class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
     private var _binding: FragmentNoteslistBinding? = null
     private val binding get() = _binding!!
 
     lateinit var viewModel: ApplicationViewModel
+    lateinit var sessionManager: SessionManager
+
     lateinit var notesAdapter: NotesAdapter
 
     override fun onCreateView(
@@ -36,6 +38,15 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ApplicationActivity).viewModel
         setupRV()
+        sessionManager = SessionManager(requireContext())
+
+        sessionManager.getUserId()
+        Log.e("NotesListFragment", "SessionManager data: id: ${sessionManager.getUserId()} token: ${sessionManager.getAuthToken()}", )
+
+        viewModel.getNotes(
+            sessionManager.getUserId(),
+            sessionManager.getAuthToken()
+        )
 
         notesAdapter.setOnItemClickListener {
             Log.e("RvNotes", "Clicked", )
@@ -52,6 +63,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
+
                     response.data?.let { notesListResponse ->
                         notesAdapter.differ.submitList(notesListResponse)
                     }
@@ -59,7 +71,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let {
-                        Log.e("NotesFragment", "Error occured: $it")
+                        Log.e("NotesListFragment", "Error occurred: $it")
                     }
                 }
                 is Resource.Loading -> {

@@ -14,7 +14,7 @@ class SessionManager(context: Context) {
     }
 
     fun clearPrefs() {
-        return prefs.all.clear()
+        return prefs.edit().clear().apply()
     }
 
     fun saveCredentials(token: String, id: Int) {

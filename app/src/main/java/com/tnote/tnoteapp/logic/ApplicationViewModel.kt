@@ -42,6 +42,10 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         accountFragmentState.postValue(handleCurrentUserResponse(response))
     }
 
+    fun logout(token: String) = viewModelScope.launch {
+        ApiInstance.api.logout(token)
+    }
+
     private fun handleNotesResponse(response: Response<List<Note>>) : Resource<List<Note>> {
         if (response.isSuccessful) {
             response.body()?.let {

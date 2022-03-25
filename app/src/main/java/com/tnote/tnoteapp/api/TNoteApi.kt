@@ -10,7 +10,7 @@ interface TNoteApi {
     suspend fun login(@Body request: LoginRequest) : Response<UserResponse>
 
     @POST(Constants.LOGOUT_URL)
-    suspend fun logout(@Header("Authorization") token: String) : Response<String>
+    suspend fun logout(@Header("Authorization") token: String) : Response<LogoutResponse>
 
     @POST(Constants.REGISTER_URL)
     suspend fun register(@Body request: RegistrationRequest) : Response<UserResponse>

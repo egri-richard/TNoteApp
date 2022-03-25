@@ -1,5 +1,6 @@
 package com.tnote.tnoteapp.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.databinding.FragmentAccountBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
 import com.tnote.tnoteapp.ui.ApplicationActivity
+import com.tnote.tnoteapp.ui.MainActivity
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
 
@@ -31,7 +33,7 @@ class AccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as ApplicationActivity).viewModel
-        sessionManager = SessionManager(view.context)
+        sessionManager = SessionManager(requireContext())
 
         viewModel.getCurrentUser(
             sessionManager.getUserId(),
@@ -39,7 +41,12 @@ class AccountFragment : Fragment() {
         )
 
         binding.btnLogout.setOnClickListener {
-            //TODO: logout
+            viewModel.logout(sessionManager.getAuthToken())
+
+            sessionManager.clearPrefs()
+
+            startActivity(Intent(activity, MainActivity::class.java))
+            (activity as ApplicationActivity).finish()
         }
 
         viewModel.accountFragmentState.observe(viewLifecycleOwner) {
@@ -50,7 +57,7 @@ class AccountFragment : Fragment() {
                     it.data?.let { currentUser ->
                         binding.tvAccountName.text = currentUser.name
                         binding.tvAccountEmail.text = currentUser.email
-                        binding.tvAccountCreatedAt.text = currentUser.created_at.toString()
+                        binding.tvAccountCreatedAt.text = currentUser.created_at.substring(0, 10)
                     }
                 }
                 is Resource.Error -> {

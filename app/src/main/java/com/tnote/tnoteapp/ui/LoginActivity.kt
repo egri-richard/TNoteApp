@@ -41,9 +41,9 @@ class LoginActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     hideProgressBar()
 
-                    Log.e("Response", "response: $response", )
                     response.data?.let {
-                        Log.e("Response", "Data: $it", )
+                        Log.e("LoginActivty", "Response: $it", )
+                        Log.e("LoginActivty", "Response Id: ${it.user.id}", )
                         sessionManager.saveCredentials(
                             it.token,
                             it.user.id

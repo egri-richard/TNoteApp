@@ -11,7 +11,7 @@
     <string name="name_hint">Full Name</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hello">Hello</string>
+    <string name="username">Username:</string>
     <string name="account_created_at">Account created at:</string>
     <string name="e_mail">E-mail:</string>
     <string name="log_out">Log out</string>
