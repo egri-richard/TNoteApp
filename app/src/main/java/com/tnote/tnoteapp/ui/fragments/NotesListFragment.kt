@@ -47,8 +47,8 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
             )
         }
 
-        viewModel.notesListFragmentState.observe(viewLifecycleOwner, Observer { response ->
-            when(response) {
+        viewModel.notesListFragmentState.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { notesListResponse ->
@@ -65,7 +65,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
                     showProgressBar()
                 }
             }
-        })
+        }
     }
 
     private fun setupRV() {

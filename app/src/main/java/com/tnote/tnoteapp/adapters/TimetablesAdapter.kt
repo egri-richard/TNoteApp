@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.databinding.ItemTimetableBinding
-import com.tnote.tnoteapp.models.Note
 import com.tnote.tnoteapp.models.Timetable
 
 class TimetablesAdapter: RecyclerView.Adapter<TimetablesAdapter.TimetableViewHolder>() {
