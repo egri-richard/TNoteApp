@@ -38,6 +38,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
         setupRV()
 
         notesAdapter.setOnItemClickListener {
+            Log.e("RvNotes", "Clicked", )
             val selectedNote = Bundle().apply {
                 putSerializable("note", it)
             }

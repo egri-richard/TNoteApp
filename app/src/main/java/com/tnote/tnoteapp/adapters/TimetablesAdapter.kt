@@ -35,6 +35,9 @@ class TimetablesAdapter: RecyclerView.Adapter<TimetablesAdapter.TimetableViewHol
 
         holder.binding.apply {
             tvTimetableName.text = timetable.name
+        }
+
+        holder.itemView.apply {
             setOnItemClickListener {
                 onItemClickListener?.let { it(timetable) }
             }
