@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_notesListFragment_to_noteFragment"
             app:destination="@id/noteFragment" />
+        <action
+            android:id="@+id/action_notesListFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/timetablesListFragment"
@@ -26,6 +29,9 @@
         <action
             android:id="@+id/action_timetablesListFragment_to_timetableFragment"
             app:destination="@id/timetableFragment" />
+        <action
+            android:id="@+id/action_timetablesListFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
@@ -40,4 +46,16 @@
         android:name="com.tnote.tnoteapp.TimetableFragment"
         android:label="fragment_timetable"
         tools:layout="@layout/fragment_timetable" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.tnote.tnoteapp.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_notesListFragment"
+            app:destination="@id/notesListFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_timetablesListFragment"
+            app:destination="@id/timetablesListFragment" />
+    </fragment>
 </navigation>

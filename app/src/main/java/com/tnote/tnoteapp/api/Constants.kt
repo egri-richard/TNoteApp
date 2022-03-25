@@ -7,6 +7,7 @@ object Constants {
     const val REGISTER_URL = "register"
     const val NOTES_URL = "notes"
     const val TIMETABLES_URL = "timetables"
+    const val USERS_URL = "users"
     const val USERNOTES_URL = "users/{id}/notes"
     const val USERTIMETABLES = "users/{id}/timetables"
     const val SELECTEDTIMETABLE = "timetables/{id}/selectedtimetable"

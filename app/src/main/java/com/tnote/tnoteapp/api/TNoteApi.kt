@@ -15,6 +15,12 @@ interface TNoteApi {
     @POST(Constants.REGISTER_URL)
     suspend fun register(@Body request: RegistrationRequest) : Response<UserResponse>
 
+    @GET("${Constants.USERS_URL}/{id}")
+    suspend fun getUser(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String
+    ) : Response<User>
+
     @GET(Constants.USERNOTES_URL)
     suspend fun getNotes(
         @Path("id") id: Int,
