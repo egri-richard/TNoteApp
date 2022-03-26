@@ -12,6 +12,7 @@ import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.adapters.NotesAdapter
 import com.tnote.tnoteapp.databinding.FragmentNoteslistBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
+import com.tnote.tnoteapp.models.Note
 import com.tnote.tnoteapp.ui.ApplicationActivity
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
@@ -50,8 +51,28 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
 
         notesAdapter.setOnItemClickListener {
             Log.e("RvNotes", "Clicked", )
+
             val selectedNote = Bundle().apply {
                 putSerializable("note", it)
+            }
+            findNavController().navigate(
+                R.id.action_notesListFragment_to_noteFragment,
+                selectedNote
+            )
+        }
+
+        binding.btnNewNote.setOnClickListener {
+            val newNote = Note(
+                "",
+                null,
+                null,
+                sessionManager.getUserId(),
+                "",
+                null
+            )
+
+            val selectedNote = Bundle().apply {
+                putSerializable("note", newNote)
             }
             findNavController().navigate(
                 R.id.action_notesListFragment_to_noteFragment,

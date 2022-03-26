@@ -1,6 +1,7 @@
 package com.tnote.tnoteapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +53,6 @@ class NoteFragment: Fragment(R.layout.fragment_note) {
     }
 
     override fun onDestroyView() {
-        saveNoteChanges(note)
         _binding = null
         super.onDestroyView()
     }
@@ -61,10 +61,17 @@ class NoteFragment: Fragment(R.layout.fragment_note) {
         note.title = binding.etShownNoteTitle.text.toString()
         note.content = binding.etShownNoteContent.text.toString()
 
-        viewModel.updateNote(
-            note.id!!,
-            sessionManager.getAuthToken(),
-            note
-        )
+        if (note.id == null) {
+            viewModel.createNote(
+                note,
+                sessionManager.getAuthToken()
+            )
+        } else {
+            viewModel.updateNote(
+                note.id,
+                sessionManager.getAuthToken(),
+                note
+            )
+        }
     }
 }

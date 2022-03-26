@@ -32,6 +32,10 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         notesListFragmentState.postValue(handleNotesResponse(response))
     }
 
+    fun createNote(body: Note, token: String) = viewModelScope.launch {
+        ApiInstance.api.newNote(token, body)
+    }
+
     fun updateNote(noteId: Int, token: String, body: Note) = viewModelScope.launch {
         ApiInstance.api.updateNote(noteId, token, body)
     }
@@ -86,6 +90,15 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
     }
 
     private fun handleSelectedTimetableResponse(response: Response<List<TTElement>>): Resource<List<TTElement>> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message(), null)
+    }
+
+    private fun handleSelectedNoteResponse(response: Response<Note>) : Resource<Note> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)
