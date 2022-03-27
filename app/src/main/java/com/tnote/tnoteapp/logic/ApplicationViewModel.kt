@@ -53,7 +53,11 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         timetableFragmentState.postValue(handleSelectedTimetableResponse(response))
     }
 
-
+    fun getSelectedTTELment(ttElementId: Int, token: String) = viewModelScope.launch {
+        ttElementFragmentState.postValue(Resource.Loading())
+        val response = ApiInstance.api.getSelectedTTElement(ttElementId, token)
+        ttElementFragmentState.postValue(handleSelectedTTElementResponse(response))
+    }
 
     fun getCurrentUser(userId: Int, token: String) = viewModelScope.launch {
         accountFragmentState.postValue(Resource.Loading())
@@ -93,6 +97,15 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
     }
 
     private fun handleSelectedTimetableResponse(response: Response<List<TTElement>>): Resource<List<TTElement>> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message(), null)
+    }
+
+    private fun handleSelectedTTElementResponse(response: Response<TTElement>) : Resource<TTElement> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)
