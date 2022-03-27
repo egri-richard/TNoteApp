@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavArgs
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.adapters.TTElementsAdapter
-import com.tnote.tnoteapp.adapters.TimetablesAdapter
 import com.tnote.tnoteapp.databinding.FragmentTimetableBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
 import com.tnote.tnoteapp.ui.ApplicationActivity
@@ -50,6 +49,16 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
             timetableId,
             sessionManager.getAuthToken()
         )
+
+        ttElementsAdapter.setOnItemClickListener {
+            val ttElementId = Bundle().apply {
+                putInt("ttElementId", it.id)
+            }
+            findNavController().navigate(
+                R.id.action_timetablesListFragment_to_timetableFragment,
+                ttElementId
+            )
+        }
 
         viewModel.timetableFragmentState.observe(viewLifecycleOwner) {
             when(it) {

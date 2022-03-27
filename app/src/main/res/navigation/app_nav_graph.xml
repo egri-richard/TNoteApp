@@ -49,6 +49,9 @@
         <argument
             android:name="timetableId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_timetableFragment_to_TTElementFragment"
+            app:destination="@id/TTElementFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -61,5 +64,14 @@
         <action
             android:id="@+id/action_accountFragment_to_timetablesListFragment"
             app:destination="@id/timetablesListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TTElementFragment"
+        android:name="com.tnote.tnoteapp.TTElementFragment"
+        android:label="fragment_ttelement"
+        tools:layout="@layout/fragment_ttelement" >
+        <argument
+            android:name="ttElementId"
+            app:argType="integer" />
     </fragment>
 </navigation>

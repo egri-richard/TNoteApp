@@ -18,6 +18,7 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
     val timetablesListFragmentState: MutableLiveData<Resource<List<Timetable>>> = MutableLiveData()
     val accountFragmentState: MutableLiveData<Resource<User>> = MutableLiveData()
     val timetableFragmentState: MutableLiveData<Resource<List<TTElement>>> = MutableLiveData()
+    val ttElementFragmentState: MutableLiveData<Resource<TTElement>> = MutableLiveData()
 
     init {
         getNotes(
@@ -51,6 +52,8 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         val response = ApiInstance.api.getSelectedTimetable(timetableId, token)
         timetableFragmentState.postValue(handleSelectedTimetableResponse(response))
     }
+
+
 
     fun getCurrentUser(userId: Int, token: String) = viewModelScope.launch {
         accountFragmentState.postValue(Resource.Loading())
@@ -98,12 +101,14 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         return Resource.Error(response.message(), null)
     }
 
-    private fun handleSelectedNoteResponse(response: Response<Note>) : Resource<Note> {
+    /*private fun handleSelectedNoteResponse(response: Response<Note>) : Resource<Note> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)
             }
         }
         return Resource.Error(response.message(), null)
-    }
+    }*/
+
+
 }

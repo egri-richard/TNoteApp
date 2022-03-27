@@ -63,4 +63,22 @@ interface TNoteApi {
         @Path("id") id: Int,
         @Header("Authorization") token: String,
     ) : Response<List<TTElement>>
+
+    @GET("${Constants.TTElements_URL}/{id}")
+    suspend fun getSelectedTTElement(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String,
+    ) : Response<TTElement>
+
+    @POST("${Constants.TTElements_URL}/{id}")
+    suspend fun createTTElement(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String,
+    ) : Response<TTElement>
+
+    @PATCH("${Constants.TTElements_URL}/{id}")
+    suspend fun updateTTElement(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String,
+    ) : Response<TTElement>
 }
