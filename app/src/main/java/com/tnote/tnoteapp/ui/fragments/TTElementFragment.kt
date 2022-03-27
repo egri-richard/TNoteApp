@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import com.tnote.tnoteapp.TTElementFragmentArgs
 import com.tnote.tnoteapp.databinding.FragmentTtelementBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
 import com.tnote.tnoteapp.ui.ApplicationActivity
@@ -42,6 +41,7 @@ class TTElementFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        _binding = null
         super.onDestroyView()
     }
 }

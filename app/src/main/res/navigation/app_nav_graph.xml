@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/TTElementFragment"
-        android:name="com.tnote.tnoteapp.TTElementFragment"
+        android:name="com.tnote.tnoteapp.ui.fragments.TTElementFragment"
         android:label="fragment_ttelement"
         tools:layout="@layout/fragment_ttelement" >
         <argument
