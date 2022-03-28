@@ -55,7 +55,7 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
                 putInt("ttElementId", it.id)
             }
             findNavController().navigate(
-                R.id.action_timetablesListFragment_to_timetableFragment,
+                R.id.action_timetableFragment_to_TTElementFragment,
                 ttElementId
             )
         }

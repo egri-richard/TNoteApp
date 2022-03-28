@@ -1,5 +1,6 @@
 package com.tnote.tnoteapp.ui.fragments
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.TimePicker
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.R
@@ -16,7 +18,7 @@ import com.tnote.tnoteapp.ui.ApplicationActivity
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
 
-class TTElementFragment : Fragment() {
+class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
     private var _binding: FragmentTtelementBinding? = null
     val binding get() = _binding!!
 
@@ -26,11 +28,13 @@ class TTElementFragment : Fragment() {
     val args: TTElementFragmentArgs by navArgs()
 
     lateinit var spAdapter: ArrayAdapter<String>
+    var hour: Int = 0
+    var minute: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentTtelementBinding.inflate(inflater, container, false)
         return _binding?.root
     }
@@ -47,6 +51,14 @@ class TTElementFragment : Fragment() {
             selectedElementId,
             sessionManager.getAuthToken()
         )
+
+        binding.btnSelectStart.setOnClickListener {
+            TimePickerDialog(requireContext(), this, hour, minute, true)
+        }
+
+        binding.btnSelectEnd.setOnClickListener {
+            TimePickerDialog(requireContext(), this, hour, minute, true)
+        }
 
 
         viewModel.ttElementFragmentState.observe(viewLifecycleOwner) {
@@ -71,6 +83,11 @@ class TTElementFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun onTimeSet(view: TimePicker?, hour: Int, minute: Int) {
+        this.hour = hour
+        this.minute = minute
     }
 
     private fun hideProgressBar() {

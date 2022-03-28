@@ -6,7 +6,7 @@ data class TTElement(
     val description: String,
     val end: String,
     val id: Int,
-    val repeating: Int,
+    val repeating: Boolean,
     val start: String,
     val title: String,
     val ttid: Int,
