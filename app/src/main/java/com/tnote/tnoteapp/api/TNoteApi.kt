@@ -46,6 +46,12 @@ interface TNoteApi {
         @Body note: Note
     ) : Response<Note>
 
+    @DELETE("${Constants.NOTES_URL}/{id}")
+    suspend fun deleteNote(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String
+    )
+
     @GET(Constants.USERTIMETABLES)
     suspend fun getTimetables(
         @Path("id") id: Int,

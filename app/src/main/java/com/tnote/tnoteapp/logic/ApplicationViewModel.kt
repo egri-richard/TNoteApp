@@ -41,6 +41,10 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         ApiInstance.api.updateNote(noteId, token, body)
     }
 
+    fun deleteNote(noteId: Int, token: String) = viewModelScope.launch {
+        ApiInstance.api.deleteNote(noteId, token)
+    }
+
     fun getTimetables(userId: Int, token: String) = viewModelScope.launch {
         timetablesListFragmentState.postValue(Resource.Loading())
         val response = ApiInstance.api.getTimetables(userId, token)
