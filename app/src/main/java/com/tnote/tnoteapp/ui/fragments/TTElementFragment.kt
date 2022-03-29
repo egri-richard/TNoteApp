@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.TimePicker
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.databinding.FragmentTtelementBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
+import com.tnote.tnoteapp.models.TTElement
 import com.tnote.tnoteapp.ui.ApplicationActivity
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
@@ -52,7 +52,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
 
         val selectedElementId = args.ttElementId
 
-        viewModel.getSelectedTTELment(
+        viewModel.getSelectedTTElement(
             selectedElementId,
             sessionManager.getAuthToken()
         )
@@ -72,7 +72,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             when(it) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    //TODO: fragment design + fill with data here
+                    fillData(it)
                 }
                 is Resource.Error -> {
                     hideProgressBar()
@@ -129,5 +129,16 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             requireContext(),
             R.layout.spitem_day,
             resources.getStringArray(R.array.days_array))
+    }
+
+    private fun fillData(it: Resource.Success<TTElement>) {
+        it.data?.apply {
+            binding.spDays.setSelection(spAdapter.getPosition(day))
+            binding.tvStart.text = start
+            binding.tvEnd.text = end
+            binding.etTTETitle.setText(title)
+            binding.etTTEDescription.setText(description)
+            binding.cbRepeating.isChecked = repeating
+        }
     }
 }

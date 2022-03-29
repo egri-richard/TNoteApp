@@ -113,21 +113,21 @@
         app:layout_constraintGuide_begin="143dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilTTEContent"
+        android:id="@+id/tilTTEDescription"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Content"
+        android:hint="Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilTTETitle">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etTTEContent"
+            android:id="@+id/etTTEDescription"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textMultiLine" />
@@ -141,7 +141,7 @@
         android:layout_marginTop="16dp"
         android:text="Repeating"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilTTEContent" />
+        app:layout_constraintTop_toBottomOf="@+id/tilTTEDescription" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

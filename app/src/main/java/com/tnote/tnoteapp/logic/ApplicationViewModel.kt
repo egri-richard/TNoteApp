@@ -53,7 +53,7 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         timetableFragmentState.postValue(handleSelectedTimetableResponse(response))
     }
 
-    fun getSelectedTTELment(ttElementId: Int, token: String) = viewModelScope.launch {
+    fun getSelectedTTElement(ttElementId: Int, token: String) = viewModelScope.launch {
         ttElementFragmentState.postValue(Resource.Loading())
         val response = ApiInstance.api.getSelectedTTElement(ttElementId, token)
         ttElementFragmentState.postValue(handleSelectedTTElementResponse(response))
