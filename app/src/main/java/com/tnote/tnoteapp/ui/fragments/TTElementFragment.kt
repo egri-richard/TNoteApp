@@ -17,6 +17,7 @@ import com.tnote.tnoteapp.logic.ApplicationViewModel
 import com.tnote.tnoteapp.ui.ApplicationActivity
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
+import java.util.*
 
 class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
     private var _binding: FragmentTtelementBinding? = null
@@ -28,6 +29,10 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
     val args: TTElementFragmentArgs by navArgs()
 
     lateinit var spAdapter: ArrayAdapter<String>
+
+    var timeSetterFlag = ""
+    val startTimeFlag = "start_time"
+    val endTimeFlag = "end_time"
     var hour: Int = 0
     var minute: Int = 0
 
@@ -53,11 +58,13 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         )
 
         binding.btnSelectStart.setOnClickListener {
-            TimePickerDialog(requireContext(), this, hour, minute, true)
+            timeSetterFlag = startTimeFlag
+            TimePickerDialog(requireContext(), this, hour, minute, true).show()
         }
 
         binding.btnSelectEnd.setOnClickListener {
-            TimePickerDialog(requireContext(), this, hour, minute, true)
+            timeSetterFlag = endTimeFlag
+            TimePickerDialog(requireContext(), this, hour, minute, true).show()
         }
 
 
@@ -86,8 +93,27 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
     }
 
     override fun onTimeSet(view: TimePicker?, hour: Int, minute: Int) {
+        getDefaultTime()
+
         this.hour = hour
         this.minute = minute
+
+        if (timeSetterFlag == startTimeFlag) {
+            binding.tvStart.text = "Start at $hour:$minute"
+            binding.tvEnd.text = "End at $hour:${minute}"
+        } else {
+            if(minute < 10) {
+                binding.tvEnd.text = "End at $hour:0$minute"
+            } else {
+                binding.tvEnd.text = "End at $hour:$minute"
+            }
+        }
+    }
+
+    private fun getDefaultTime() {
+        val cal = Calendar.getInstance()
+        hour = cal.get(Calendar.HOUR)
+        minute = cal.get(Calendar.MINUTE)
     }
 
     private fun hideProgressBar() {

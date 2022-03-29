@@ -15,7 +15,7 @@
         <entry key="app/src/main/res/layout/fragment_timetable.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/fragment_timetables.xml" value="0.22554347826086957" />
         <entry key="app/src/main/res/layout/fragment_timetableslist.xml" value="0.2726449275362319" />
-        <entry key="app/src/main/res/layout/fragment_ttelement.xml" value="0.2726449275362319" />
+        <entry key="app/src/main/res/layout/fragment_ttelement.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_note.xml" value="0.22554347826086957" />
         <entry key="app/src/main/res/layout/item_timetable.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_ttelement.xml" value="0.36265060240963853" />
