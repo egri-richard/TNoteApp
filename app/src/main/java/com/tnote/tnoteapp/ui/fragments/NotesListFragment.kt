@@ -1,10 +1,12 @@
 package com.tnote.tnoteapp.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +61,19 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
                 R.id.action_notesListFragment_to_noteFragment,
                 selectedNote
             )
+        }
+
+        notesAdapter.setOnItemLongClickListener {
+            AlertDialog.Builder(requireContext())
+            .setTitle("Delete")
+            .setMessage("Do you want to delete this note?")
+            .setPositiveButton("Yes") { _, _ ->
+                delete(it.id!!)
+                Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("No") { _, _ -> }
+            .create()
+            .show()
         }
 
         binding.btnNewNote.setOnClickListener {
@@ -116,6 +131,18 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
 
     private fun showProgressBar() {
         binding.notesListProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun delete(id: Int) {
+        viewModel.deleteNote(
+            id,
+            sessionManager.getAuthToken()
+        )
+
+        viewModel.getNotes(
+            sessionManager.getUserId(),
+            sessionManager.getAuthToken()
+        )
     }
 
     override fun onDestroyView() {

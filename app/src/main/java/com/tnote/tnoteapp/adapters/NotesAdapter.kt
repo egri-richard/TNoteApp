@@ -41,6 +41,11 @@ class NotesAdapter: RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
         holder.itemView.setOnClickListener {
             onItemClickListener?.let { it(note) }
         }
+
+        holder.itemView.setOnLongClickListener {
+            onItemLongClickListener?.let { it(note) }
+            return@setOnLongClickListener true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -51,5 +56,11 @@ class NotesAdapter: RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
     fun setOnItemClickListener(listener: (Note) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private var onItemLongClickListener: ((Note) -> Unit)? = null
+
+    fun setOnItemLongClickListener(listener: (Note) -> Unit) {
+        onItemLongClickListener = listener
     }
 }
