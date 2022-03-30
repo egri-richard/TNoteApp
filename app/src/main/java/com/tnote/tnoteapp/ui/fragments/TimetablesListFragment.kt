@@ -1,9 +1,11 @@
 package com.tnote.tnoteapp.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,11 +41,8 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
         viewModel = (activity as ApplicationActivity).viewModel
         setupRV()
         sessionManager = SessionManager(requireContext())
+        getData()
 
-        viewModel.getTimetables(
-            sessionManager.getUserId(),
-            sessionManager.getAuthToken()
-        )
 
         timetablesAdapter.setOnItemClickListener {
             val timetableId = Bundle().apply {
@@ -53,6 +52,10 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
                 R.id.action_timetablesListFragment_to_timetableFragment,
                 timetableId
             )
+        }
+
+        timetablesAdapter.setOnItemLongClickListener {
+            val dialog = createDeleteDialog(it.id!!).show()
         }
 
         viewModel.timetablesListFragmentState.observe(viewLifecycleOwner) {
@@ -83,6 +86,13 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
         super.onDestroyView()
     }
 
+    private fun getData() {
+        viewModel.getTimetables(
+            sessionManager.getUserId(),
+            sessionManager.getAuthToken()
+        )
+    }
+
     private fun setupRV() {
         timetablesAdapter = TimetablesAdapter()
         binding.rvTimetables.apply {
@@ -97,5 +107,28 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
 
     private fun showProgressBar() {
         binding.timetablesListProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun delete(id: Int) {
+        viewModel.deleteTimetable(
+            id,
+            sessionManager.getAuthToken()
+        )
+
+        getData()
+    }
+
+    private fun createDeleteDialog(id: Int): AlertDialog {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Delete")
+            .setMessage("Do you want to delete this timetable?")
+            .setPositiveButton("Yes") { _, _ ->
+                delete(id)
+                Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("No") { _, _ -> }
+            .create()
+
+        return dialog
     }
 }

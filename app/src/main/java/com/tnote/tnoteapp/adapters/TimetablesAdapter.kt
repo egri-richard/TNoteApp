@@ -40,6 +40,12 @@ class TimetablesAdapter: RecyclerView.Adapter<TimetablesAdapter.TimetableViewHol
         holder.itemView.setOnClickListener {
             onItemClickListener?.let { it(timetable) }
         }
+
+        holder.itemView.setOnLongClickListener {
+            onItemLongClickListener?.let { it(timetable) }
+
+            return@setOnLongClickListener true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -50,5 +56,11 @@ class TimetablesAdapter: RecyclerView.Adapter<TimetablesAdapter.TimetableViewHol
 
     fun setOnItemClickListener(listener: (Timetable) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private var onItemLongClickListener: ((Timetable) -> Unit)? = null
+
+    fun setOnItemLongClickListener(listener: (Timetable) -> Unit) {
+        onItemLongClickListener = listener
     }
 }

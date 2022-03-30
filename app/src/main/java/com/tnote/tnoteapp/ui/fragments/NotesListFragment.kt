@@ -64,16 +64,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
         }
 
         notesAdapter.setOnItemLongClickListener {
-            AlertDialog.Builder(requireContext())
-            .setTitle("Delete")
-            .setMessage("Do you want to delete this note?")
-            .setPositiveButton("Yes") { _, _ ->
-                delete(it.id!!)
-                Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
-            }
-            .setNegativeButton("No") { _, _ -> }
-            .create()
-            .show()
+            val dialog = createDeleteDialog(it.id!!).show()
         }
 
         binding.btnNewNote.setOnClickListener {
@@ -143,6 +134,20 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
             sessionManager.getUserId(),
             sessionManager.getAuthToken()
         )
+    }
+
+    private fun createDeleteDialog(id: Int): AlertDialog {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Delete")
+            .setMessage("Do you want to delete this note?")
+            .setPositiveButton("Yes") { _, _ ->
+                delete(id)
+                Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("No") { _, _ -> }
+            .create()
+
+        return dialog
     }
 
     override fun onDestroyView() {

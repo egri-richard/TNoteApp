@@ -70,6 +70,12 @@ interface TNoteApi {
         @Header("Authorization") token: String,
     ) : Response<List<TTElement>>
 
+    @DELETE(Constants.SELECTEDTIMETABLE)
+    suspend fun deleteTimetable(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String,
+    )
+
     @GET("${Constants.TTElements_URL}/{id}")
     suspend fun getSelectedTTElement(
         @Path("id") id: Int,
@@ -80,11 +86,19 @@ interface TNoteApi {
     suspend fun createTTElement(
         @Path("id") id: Int,
         @Header("Authorization") token: String,
+        @Body ttElement: TTElement
     ) : Response<TTElement>
 
     @PATCH("${Constants.TTElements_URL}/{id}")
     suspend fun updateTTElement(
         @Path("id") id: Int,
         @Header("Authorization") token: String,
+        @Body ttElement: TTElement
     ) : Response<TTElement>
+
+    @DELETE("${Constants.TTElements_URL}/{id}")
+    suspend fun deleteTTElement(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String,
+    )
 }

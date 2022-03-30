@@ -42,6 +42,12 @@ class TTElementsAdapter: RecyclerView.Adapter<TTElementsAdapter.TTElementViewHol
         holder.itemView.setOnClickListener {
             onItemClickListener?.let { it(ttElement) }
         }
+
+        holder.itemView.setOnLongClickListener {
+            onItemLongClickListener?.let { it(ttElement) }
+
+            return@setOnLongClickListener true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -52,5 +58,11 @@ class TTElementsAdapter: RecyclerView.Adapter<TTElementsAdapter.TTElementViewHol
 
     fun setOnItemClickListener(listener: (TTElement) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private var onItemLongClickListener: ((TTElement) -> Unit)? = null
+
+    fun setOnItemLongClickListener(listener: (TTElement) -> Unit) {
+        onItemLongClickListener = listener
     }
 }

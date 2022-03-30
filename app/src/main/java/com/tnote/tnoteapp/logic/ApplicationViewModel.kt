@@ -57,10 +57,18 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         timetableFragmentState.postValue(handleSelectedTimetableResponse(response))
     }
 
+    fun deleteTimetable(timetableId: Int, token: String) = viewModelScope.launch {
+        ApiInstance.api.deleteTimetable(timetableId, token)
+    }
+
     fun getSelectedTTElement(ttElementId: Int, token: String) = viewModelScope.launch {
         ttElementFragmentState.postValue(Resource.Loading())
         val response = ApiInstance.api.getSelectedTTElement(ttElementId, token)
         ttElementFragmentState.postValue(handleSelectedTTElementResponse(response))
+    }
+
+    fun deleteTTElement(ttElementId: Int, token: String) = viewModelScope.launch {
+        ApiInstance.api.deleteTTElement(ttElementId, token)
     }
 
     fun getCurrentUser(userId: Int, token: String) = viewModelScope.launch {
