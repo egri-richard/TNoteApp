@@ -1,9 +1,11 @@
 package com.tnote.tnoteapp.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,6 +29,7 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
     lateinit var sessionManager: SessionManager
 
     val args: TimetableFragmentArgs by navArgs()
+    private var timetableId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,12 +46,9 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
         setupRV()
         sessionManager = SessionManager(requireContext())
 
-        val timetableId = args.timetableId
+        timetableId = args.timetableId
+        getData()
 
-        viewModel.getSelectedTimetable(
-            timetableId,
-            sessionManager.getAuthToken()
-        )
 
         ttElementsAdapter.setOnItemClickListener {
             val ttElementId = Bundle().apply {
@@ -58,6 +58,10 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
                 R.id.action_timetableFragment_to_TTElementFragment,
                 ttElementId
             )
+        }
+
+        ttElementsAdapter.setOnItemLongClickListener {
+            createDeleteDialog(it.id).show()
         }
 
         viewModel.timetableFragmentState.observe(viewLifecycleOwner) {
@@ -88,6 +92,13 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
         super.onDestroyView()
     }
 
+    private fun getData() {
+        viewModel.getSelectedTimetable(
+            timetableId,
+            sessionManager.getAuthToken()
+        )
+    }
+
     private fun setupRV() {
         ttElementsAdapter = TTElementsAdapter()
         binding.rvTTElements.apply {
@@ -102,5 +113,28 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
 
     private fun showProgressBar() {
         binding.fragmentTimetableProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun delete(id: Int) {
+        viewModel.deleteTTElement(
+            id,
+            sessionManager.getAuthToken()
+        )
+
+        getData()
+    }
+
+    private fun createDeleteDialog(id: Int): AlertDialog {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Delete")
+            .setMessage("Do you want to delete this event?")
+            .setPositiveButton("Yes") { _, _ ->
+                delete(id)
+                Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("No") { _, _ -> }
+            .create()
+
+        return dialog
     }
 }

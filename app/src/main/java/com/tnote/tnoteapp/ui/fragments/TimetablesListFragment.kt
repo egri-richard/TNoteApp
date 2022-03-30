@@ -55,7 +55,7 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
         }
 
         timetablesAdapter.setOnItemLongClickListener {
-            val dialog = createDeleteDialog(it.id!!).show()
+            createDeleteDialog(it.id!!).show()
         }
 
         viewModel.timetablesListFragmentState.observe(viewLifecycleOwner) {

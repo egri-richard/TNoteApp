@@ -64,7 +64,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
         }
 
         notesAdapter.setOnItemLongClickListener {
-            val dialog = createDeleteDialog(it.id!!).show()
+            createDeleteDialog(it.id!!).show()
         }
 
         binding.btnNewNote.setOnClickListener {
