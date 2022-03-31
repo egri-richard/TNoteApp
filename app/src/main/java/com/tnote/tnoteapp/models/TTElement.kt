@@ -1,14 +1,14 @@
 package com.tnote.tnoteapp.models
 
 data class TTElement(
-    val created_at: String,
-    val day: String,
-    val description: String,
-    val end: String,
+    val created_at: String?,
+    var day: String,
+    var description: String,
+    var end: String,
     val id: Int,
-    val repeating: Boolean,
-    val start: String,
-    val title: String,
+    var repeating: Boolean,
+    var start: String,
+    var title: String,
     val ttid: Int,
-    val updated_at: String
+    val updated_at: String?
 )

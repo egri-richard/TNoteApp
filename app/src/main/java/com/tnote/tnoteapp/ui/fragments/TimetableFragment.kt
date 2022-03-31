@@ -64,6 +64,17 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
             createDeleteDialog(it.id).show()
         }
 
+        binding.fabNewTTElement.setOnClickListener {
+            val ttElementId = Bundle().apply {
+                putInt("ttElementId", 0)
+                putInt("timetableId", timetableId)
+            }
+            findNavController().navigate(
+                R.id.action_timetableFragment_to_TTElementFragment,
+                ttElementId
+            )
+        }
+
         viewModel.timetableFragmentState.observe(viewLifecycleOwner) {
             when(it) {
                 is Resource.Success -> {

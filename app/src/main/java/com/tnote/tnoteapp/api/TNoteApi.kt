@@ -84,7 +84,6 @@ interface TNoteApi {
 
     @POST("${Constants.TTElements_URL}/{id}")
     suspend fun createTTElement(
-        @Path("id") id: Int,
         @Header("Authorization") token: String,
         @Body ttElement: TTElement
     ) : Response<TTElement>

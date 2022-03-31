@@ -67,6 +67,14 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         ttElementFragmentState.postValue(handleSelectedTTElementResponse(response))
     }
 
+    fun createTTElement(token: String, body: TTElement) = viewModelScope.launch {
+        ApiInstance.api.createTTElement(token, body)
+    }
+
+    fun updateTTElement(ttElementId: Int, token: String, body: TTElement) = viewModelScope.launch {
+        ApiInstance.api.updateTTElement(ttElementId, token, body)
+    }
+
     fun deleteTTElement(ttElementId: Int, token: String) = viewModelScope.launch {
         ApiInstance.api.deleteTTElement(ttElementId, token)
     }

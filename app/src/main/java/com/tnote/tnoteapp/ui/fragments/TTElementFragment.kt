@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.R
@@ -29,6 +30,9 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
     val args: TTElementFragmentArgs by navArgs()
 
     lateinit var spAdapter: ArrayAdapter<String>
+    lateinit var ttElement: TTElement
+    private var selectedElementId: Int = 0
+    private var timetableId: Int = 0
 
     var timeSetterFlag = ""
     val startTimeFlag = "start_time"
@@ -50,12 +54,17 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         sessionManager = SessionManager(requireContext())
         setupSpAdapter()
 
-        val selectedElementId = args.ttElementId
+        selectedElementId = args.ttElementId
+        timetableId = args.timetableId
 
-        viewModel.getSelectedTTElement(
-            selectedElementId,
-            sessionManager.getAuthToken()
-        )
+        if (selectedElementId == 0) {
+            fillData(newTTElement())
+        } else {
+            viewModel.getSelectedTTElement(
+                selectedElementId,
+                sessionManager.getAuthToken()
+            )
+        }
 
         binding.btnSelectStart.setOnClickListener {
             timeSetterFlag = startTimeFlag
@@ -67,12 +76,18 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             TimePickerDialog(requireContext(), this, hour, minute, true).show()
         }
 
+        binding.fabSaveTTElement.setOnClickListener {
+            saveTTElementChanges(ttElement)
+            Toast.makeText(requireContext(), "Event saved", Toast.LENGTH_SHORT).show()
+        }
+
 
         viewModel.ttElementFragmentState.observe(viewLifecycleOwner) {
             when(it) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    fillData(it)
+                    fillData(it.data!!)
+                    ttElement = it.data
                 }
                 is Resource.Error -> {
                     hideProgressBar()
@@ -99,9 +114,13 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         this.minute = minute
 
         if (timeSetterFlag == startTimeFlag) {
+            ttElement.start = "$hour:$minute"
+
             binding.tvStart.text = "Start at $hour:$minute"
             binding.tvEnd.text = "End at $hour:${minute}"
         } else {
+            ttElement.end = "$hour:$minute"
+
             if(minute < 10) {
                 binding.tvEnd.text = "End at $hour:0$minute"
             } else {
@@ -131,8 +150,28 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             resources.getStringArray(R.array.days_array))
     }
 
-    private fun fillData(it: Resource.Success<TTElement>) {
-        it.data?.apply {
+    private fun saveTTElementChanges(ttElement: TTElement) {
+        ttElement.title = binding.etTTETitle.text.toString()
+        ttElement.description = binding.etTTEDescription.text.toString()
+        ttElement.day = binding.spDays.selectedItem.toString()
+        ttElement.repeating = binding.cbRepeating.isChecked
+
+        if (selectedElementId == 0) {
+            viewModel.createTTElement(
+                sessionManager.getAuthToken(),
+                ttElement
+            )
+        } else {
+            viewModel.updateTTElement(
+                selectedElementId,
+                sessionManager.getAuthToken(),
+                ttElement
+            )
+        }
+    }
+
+    private fun fillData(it: TTElement) {
+        it.apply {
             binding.spDays.setSelection(spAdapter.getPosition(day))
             binding.tvStart.text = start
             binding.tvEnd.text = end
@@ -140,5 +179,20 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             binding.etTTEDescription.setText(description)
             binding.cbRepeating.isChecked = repeating
         }
+    }
+
+    private fun newTTElement(): TTElement {
+        return TTElement(
+            id = 0,
+            ttid = timetableId,
+            day = "Monday",
+            title = "",
+            description = "",
+            start = "00:00",
+            end = "00:00",
+            repeating = false,
+            created_at = null,
+            updated_at = null
+        )
     }
 }
