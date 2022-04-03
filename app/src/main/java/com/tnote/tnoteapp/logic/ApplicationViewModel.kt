@@ -57,6 +57,10 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         timetableFragmentState.postValue(handleSelectedTimetableResponse(response))
     }
 
+    fun createTimetable(body: Timetable, token: String) = viewModelScope.launch {
+        ApiInstance.api.newTimetable(token, body)
+    }
+
     fun deleteTimetable(timetableId: Int, token: String) = viewModelScope.launch {
         ApiInstance.api.deleteTimetable(timetableId, token)
     }

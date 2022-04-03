@@ -14,6 +14,7 @@ import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.adapters.TimetablesAdapter
 import com.tnote.tnoteapp.databinding.FragmentTimetableslistBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
+import com.tnote.tnoteapp.models.Timetable
 import com.tnote.tnoteapp.ui.ApplicationActivity
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
@@ -43,6 +44,9 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
         sessionManager = SessionManager(requireContext())
         getData()
 
+        binding.btnAddNewTimetable.setOnClickListener {
+            addNewTimetable()
+        }
 
         timetablesAdapter.setOnItemClickListener {
             val timetableId = Bundle().apply {
@@ -107,6 +111,20 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
 
     private fun showProgressBar() {
         binding.timetablesListProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun addNewTimetable() {
+        val name = binding.etNewTimetableName.text.toString()
+        viewModel.createTimetable(
+            Timetable(null, sessionManager.getUserId(), name),
+            sessionManager.getAuthToken()
+        )
+
+        Toast.makeText(
+            requireContext(),
+            "Timetable $name created",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun delete(id: Int) {
