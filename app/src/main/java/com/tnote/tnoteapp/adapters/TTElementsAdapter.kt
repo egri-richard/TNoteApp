@@ -34,6 +34,7 @@ class TTElementsAdapter: RecyclerView.Adapter<TTElementsAdapter.TTElementViewHol
         val ttElement = differ.currentList[position]
 
         holder.binding.apply {
+            tvLessonDay.text = "Day: ${ttElement.day}"
             tvLessonTitle.text = ttElement.title
             tvLessonStart.text = ttElement.start
             tvLessonEnd.text = ttElement.end
