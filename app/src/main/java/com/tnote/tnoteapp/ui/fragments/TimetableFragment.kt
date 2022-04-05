@@ -52,7 +52,7 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
 
         ttElementsAdapter.setOnItemClickListener {
             val ttElementId = Bundle().apply {
-                putInt("ttElementId", it.id)
+                putInt("ttElementId", it.id!!)
             }
             findNavController().navigate(
                 R.id.action_timetableFragment_to_TTElementFragment,
@@ -61,7 +61,7 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
         }
 
         ttElementsAdapter.setOnItemLongClickListener {
-            createDeleteDialog(it.id).show()
+            createDeleteDialog(it.id!!).show()
         }
 
         binding.fabNewTTElement.setOnClickListener {

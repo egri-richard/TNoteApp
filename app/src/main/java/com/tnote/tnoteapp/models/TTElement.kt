@@ -5,7 +5,7 @@ data class TTElement(
     var day: String,
     var description: String,
     var end: String,
-    val id: Int,
+    val id: Int?,
     var repeating: Boolean,
     var start: String,
     var title: String,

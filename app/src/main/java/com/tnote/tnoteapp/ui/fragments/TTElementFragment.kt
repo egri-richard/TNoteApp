@@ -183,7 +183,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
 
     private fun newTTElement(): TTElement {
         return TTElement(
-            id = 0,
+            id = null,
             ttid = timetableId,
             day = "Monday",
             title = "",
