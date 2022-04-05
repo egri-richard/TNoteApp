@@ -3,9 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="150dp"
     android:paddingStart="10dp"
     android:paddingEnd="10dp">
+
+    <TextView
+        android:id="@+id/tvLessonDay"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Day: XXXXXX" />
 
     <TextView
         android:id="@+id/tvLessonTitle"
@@ -15,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLessonDay"
         tools:text="Óra neve" />
 
     <TextView
@@ -23,8 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="00:00-tól" />
 
     <TextView

@@ -80,6 +80,7 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
                 is Resource.Success -> {
                     hideProgressBar()
                     it.data?.let { list ->
+                        //TODO: sort out current days ttelements
                         ttElementsAdapter.differ.submitList(list)
                     }
                 }
