@@ -37,6 +37,8 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         app:srcCompat="@drawable/ic_baseline_add_24"
+
+        android:backgroundTint="@color/purple_500"
         android:contentDescription="newNote" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
