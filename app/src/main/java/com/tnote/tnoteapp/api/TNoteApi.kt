@@ -27,11 +27,11 @@ interface TNoteApi {
         @Header("Authorization") token: String
     ) : Response<List<Note>>
 
-    @GET("${Constants.NOTES_URL}/{id}")
+    /*@GET("${Constants.NOTES_URL}/{id}")
     suspend fun getNote(
         @Path("id") id: Int,
         @Header("Authorization") token: String
-    ) : Response<Note>
+    ) : Response<Note>*/
 
     @POST(Constants.NOTES_URL)
     suspend fun newNote(

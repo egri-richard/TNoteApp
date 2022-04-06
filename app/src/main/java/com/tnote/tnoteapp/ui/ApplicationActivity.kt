@@ -20,7 +20,7 @@ import com.tnote.tnoteapp.util.SessionManager
 class ApplicationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityApplicationBinding
     lateinit var viewModel: ApplicationViewModel
-lateinit var sessionManager: SessionManager
+    lateinit var sessionManager: SessionManager
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -40,7 +40,7 @@ lateinit var sessionManager: SessionManager
         navHostFragment = supportFragmentManager.findFragmentById(R.id.appNavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        drawerLayout = findViewById(R.id.drawerLayout)
+        drawerLayout = binding.drawerLayout
         binding.navigationView.setupWithNavController(navController)
 
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
