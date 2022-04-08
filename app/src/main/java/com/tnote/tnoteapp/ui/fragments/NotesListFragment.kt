@@ -43,9 +43,6 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
         setupRV()
         sessionManager = SessionManager(requireContext())
 
-        sessionManager.getUserId()
-        Log.e("NotesListFragment", "SessionManager data: id: ${sessionManager.getUserId()} token: ${sessionManager.getAuthToken()}", )
-
         viewModel.getNotes(
             sessionManager.getUserId(),
             sessionManager.getAuthToken()

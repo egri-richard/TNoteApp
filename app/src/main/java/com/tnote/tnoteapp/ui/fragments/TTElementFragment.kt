@@ -57,14 +57,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         selectedElementId = args.ttElementId
         timetableId = args.timetableId
 
-        if (selectedElementId == 0) {
-            fillData(newTTElement())
-        } else {
-            viewModel.getSelectedTTElement(
-                selectedElementId,
-                sessionManager.getAuthToken()
-            )
-        }
+        getData()
 
         binding.btnSelectStart.setOnClickListener {
             timeSetterFlag = startTimeFlag
@@ -126,6 +119,17 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             } else {
                 binding.tvEnd.text = "End at $hour:$minute"
             }
+        }
+    }
+
+    private fun getData() {
+        if (selectedElementId == 0) {
+            fillData(newTTElement())
+        } else {
+            viewModel.getSelectedTTElement(
+                selectedElementId,
+                sessionManager.getAuthToken()
+            )
         }
     }
 
