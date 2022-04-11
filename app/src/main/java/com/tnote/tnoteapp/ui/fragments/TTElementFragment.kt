@@ -2,6 +2,7 @@ package com.tnote.tnoteapp.ui.fragments
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -81,6 +82,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
                     hideProgressBar()
                     fillData(it.data!!)
                     ttElement = it.data
+                    Log.e("onTTElementFragmentStateResponse", "Success Called", )
                 }
                 is Resource.Error -> {
                     hideProgressBar()
@@ -124,7 +126,10 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
 
     private fun getData() {
         if (selectedElementId == 0) {
-            fillData(newTTElement())
+            val tempTTE = newTTElement()
+            fillData(tempTTE)
+            ttElement = tempTTE
+            hideProgressBar()
         } else {
             viewModel.getSelectedTTElement(
                 selectedElementId,
@@ -165,12 +170,14 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
                 sessionManager.getAuthToken(),
                 ttElement
             )
+            Log.e("OnSaveTTEChanges", "Create called with $ttElement")
         } else {
             viewModel.updateTTElement(
                 selectedElementId,
                 sessionManager.getAuthToken(),
                 ttElement
             )
+            Log.e("OnSaveTTEChanges", "Update called with $ttElement")
         }
     }
 

@@ -2,6 +2,7 @@ package com.tnote.tnoteapp.ui.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,9 +80,12 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
             when(it) {
                 is Resource.Success -> {
                     hideProgressBar()
+                    Log.e("OnTimetableFragmentStateResponse", "response data: ${it.data}", )
+
                     it.data?.let { list ->
-                        //TODO: sort out current days ttelements
+                        ttElementsAdapter.differ.submitList(null)
                         ttElementsAdapter.differ.submitList(list)
+                        Log.e("OnTimetableFragmentStateResponse", "RetList: $list", )
                     }
                 }
                 is Resource.Error -> {
@@ -109,6 +113,8 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
             timetableId,
             sessionManager.getAuthToken()
         )
+
+        Log.e("TimetableFragment getData called", "TTID: $timetableId ", )
     }
 
     private fun setupRV() {

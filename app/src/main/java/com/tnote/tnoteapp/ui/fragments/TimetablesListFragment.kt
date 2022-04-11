@@ -66,7 +66,9 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
             when(it) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    it.data?.let { list ->
+                    it.data?.let { timetablesList ->
+                        val list = timetablesList.reversed()
+                        timetablesAdapter.differ.submitList(null)
                         timetablesAdapter.differ.submitList(list)
                     }
                 }
