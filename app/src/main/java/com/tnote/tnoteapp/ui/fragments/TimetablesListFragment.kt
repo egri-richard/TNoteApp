@@ -125,6 +125,8 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
             "Timetable $name created",
             Toast.LENGTH_SHORT
         ).show()
+
+        getData()
     }
 
     private fun delete(id: Int) {

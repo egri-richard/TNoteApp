@@ -70,7 +70,7 @@ interface TNoteApi {
         @Header("Authorization") token: String,
     ) : Response<List<TTElement>>
 
-    @DELETE(Constants.SELECTEDTIMETABLE)
+    @DELETE("${Constants.TIMETABLES_URL}/{id}")
     suspend fun deleteTimetable(
         @Path("id") id: Int,
         @Header("Authorization") token: String,

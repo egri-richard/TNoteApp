@@ -43,10 +43,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
         setupRV()
         sessionManager = SessionManager(requireContext())
 
-        viewModel.getNotes(
-            sessionManager.getUserId(),
-            sessionManager.getAuthToken()
-        )
+        getData()
 
         notesAdapter.setOnItemClickListener {
             Log.e("RvNotes", "Clicked", )
@@ -90,6 +87,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
 
                     response.data?.let { notesListResponse ->
                         notesAdapter.differ.submitList(notesListResponse)
+                        Log.e("NotesListFragment", "onResponse: $notesListResponse")
                     }
                 }
                 is Resource.Error -> {
@@ -103,6 +101,13 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
                 }
             }
         }
+    }
+
+    private fun getData() {
+        viewModel.getNotes(
+            sessionManager.getUserId(),
+            sessionManager.getAuthToken()
+        )
     }
 
     private fun setupRV() {
@@ -127,10 +132,7 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
             sessionManager.getAuthToken()
         )
 
-        viewModel.getNotes(
-            sessionManager.getUserId(),
-            sessionManager.getAuthToken()
-        )
+        getData()
     }
 
     private fun createDeleteDialog(id: Int): AlertDialog {

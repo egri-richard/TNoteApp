@@ -44,7 +44,6 @@ class NoteFragment: Fragment(R.layout.fragment_note) {
         note = args.note
 
         binding.etShownNoteTitle.setText(note.title)
-        binding.etShownNoteContent.setText(note.content)
 
         binding.btnSaveShownNote.setOnClickListener {
             saveNoteChanges(note)
@@ -59,7 +58,11 @@ class NoteFragment: Fragment(R.layout.fragment_note) {
 
     private fun saveNoteChanges(note: Note) {
         note.title = binding.etShownNoteTitle.text.toString()
-        note.content = binding.etShownNoteContent.text.toString()
+        if (binding.etShownNoteContent.text.toString().isEmpty()) {
+            note.content = ""
+        } else {
+            note.content = binding.etShownNoteContent.text.toString()
+        }
 
         if (note.id == null) {
             viewModel.createNote(
