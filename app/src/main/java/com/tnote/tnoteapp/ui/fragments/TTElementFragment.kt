@@ -111,8 +111,11 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         if (timeSetterFlag == startTimeFlag) {
             ttElement.start = "$hour:$minute"
 
-            binding.tvStart.text = "Start at $hour:$minute"
-            binding.tvEnd.text = "End at $hour:${minute}"
+            if(minute < 10) {
+                binding.tvStart.text = "Start at $hour:0$minute"
+            } else {
+                binding.tvStart.text = "Start at $hour:$minute"
+            }
         } else {
             ttElement.end = "$hour:$minute"
 
@@ -163,7 +166,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         ttElement.title = binding.etTTETitle.text.toString()
         ttElement.description = binding.etTTEDescription.text.toString()
         ttElement.day = binding.spDays.selectedItem.toString()
-        ttElement.repeating = binding.cbRepeating.isChecked
+        ttElement.repeating = true //binding.cbRepeating.isChecked
 
         if (selectedElementId == 0) {
             viewModel.createTTElement(
@@ -188,7 +191,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             binding.tvEnd.text = end
             binding.etTTETitle.setText(title)
             binding.etTTEDescription.setText(description)
-            binding.cbRepeating.isChecked = repeating
+            //binding.cbRepeating.isChecked = repeating
         }
     }
 
@@ -201,7 +204,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             description = "",
             start = "00:00",
             end = "00:00",
-            repeating = false,
+            repeating = true,
             created_at = null,
             updated_at = null
         )

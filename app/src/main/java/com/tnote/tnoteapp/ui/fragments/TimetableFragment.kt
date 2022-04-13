@@ -52,9 +52,11 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
 
 
         ttElementsAdapter.setOnItemClickListener {
-            val ttElementId = Bundle().apply {
-                putInt("ttElementId", it.id!!)
-            }
+            Log.e("OnNavigateToTTEFrag", "id: ${it.id}", )
+            val ttElementId = Bundle()
+            ttElementId.putInt("ttElementId", it.id!!)
+
+            Log.e("OnNavigateToTTEFrag_NavArgsBundle", "Value: $ttElementId", )
             findNavController().navigate(
                 R.id.action_timetableFragment_to_TTElementFragment,
                 ttElementId
@@ -62,6 +64,7 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
         }
 
         ttElementsAdapter.setOnItemLongClickListener {
+            //Log.e("OnTTEDelBtnClick", "id: ${it.id!!}", )
             createDeleteDialog(it.id!!).show()
         }
 
@@ -76,16 +79,23 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
             )
         }
 
-        viewModel.timetableFragmentState.observe(viewLifecycleOwner) {
-            when(it) {
+        viewModel.timetableFragmentState.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    Log.e("OnTimetableFragmentStateResponse", "response data: ${it.data}", )
+                    Log.e("OnTimetableFragmentStateResponse", "response data: ${response.data}")
 
-                    it.data?.let { list ->
+                    response.data?.let { list ->
+                        var sortedList = list.sortedWith(
+                            compareBy(
+                                { it.day },
+                                { it.start.first() }
+                            )
+                        )
+
                         ttElementsAdapter.differ.submitList(null)
                         ttElementsAdapter.differ.submitList(list)
-                        Log.e("OnTimetableFragmentStateResponse", "RetList: $list", )
+                        Log.e("OnTimetableFragmentStateResponse", "RetList: $list")
                     }
                 }
                 is Resource.Error -> {

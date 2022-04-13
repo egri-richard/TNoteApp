@@ -133,7 +133,7 @@
             android:inputType="textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <CheckBox
+    <!--<CheckBox
         android:id="@+id/cbRepeating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
         android:layout_marginTop="16dp"
         android:text="Repeating"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilTTEDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/tilTTEDescription" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
