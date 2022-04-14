@@ -85,11 +85,10 @@ class NotesListFragment: Fragment(R.layout.fragment_noteslist) {
                 is Resource.Success -> {
                     hideProgressBar()
 
-                    response.data?.let { notesListResponse ->
-                        val list = notesListResponse.reversed()
-                        notesAdapter.differ.submitList(null)
+                    response.data?.let { notesList ->
+                        val list = notesList.reversed()
                         notesAdapter.differ.submitList(list)
-                        //Log.e("NotesListFragment", "onResponse: $notesListResponse")
+                        Log.e("NotesListFragment", "onResponse: $notesList")
                     }
                 }
                 is Resource.Error -> {

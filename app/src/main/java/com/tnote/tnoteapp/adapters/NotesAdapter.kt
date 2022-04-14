@@ -26,6 +26,10 @@ class NotesAdapter: RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
     val differ = AsyncListDiffer(this, differCallback)
 
+    /*fun submitList(list: List<Note>?) {
+        differ.submitList(list?.let { ArrayList(it) })
+    }*/
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemNoteBinding.inflate(layoutInflater, parent, false)

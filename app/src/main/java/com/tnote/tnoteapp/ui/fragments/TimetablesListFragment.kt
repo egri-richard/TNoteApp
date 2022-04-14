@@ -2,6 +2,7 @@ package com.tnote.tnoteapp.ui.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
         viewModel = (activity as ApplicationActivity).viewModel
         setupRV()
         sessionManager = SessionManager(requireContext())
+
         getData()
 
         binding.btnAddNewTimetable.setOnClickListener {
@@ -66,10 +68,12 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
             when(it) {
                 is Resource.Success -> {
                     hideProgressBar()
+
                     it.data?.let { timetablesList ->
                         val list = timetablesList.reversed()
-                        timetablesAdapter.differ.submitList(null)
+
                         timetablesAdapter.differ.submitList(list)
+                        Log.e("NotesListFragment", "onResponse: $timetablesList")
                     }
                 }
                 is Resource.Error -> {

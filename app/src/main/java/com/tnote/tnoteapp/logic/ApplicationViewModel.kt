@@ -10,6 +10,7 @@ import com.tnote.tnoteapp.models.Timetable
 import com.tnote.tnoteapp.models.User
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -20,15 +21,9 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
     val timetableFragmentState: MutableLiveData<Resource<List<TTElement>>> = MutableLiveData()
     val ttElementFragmentState: MutableLiveData<Resource<TTElement>> = MutableLiveData()
 
-    init {
-        getNotes(
-            sessionManager.getUserId(),
-            sessionManager.getAuthToken()
-        )
-    }
-
     fun getNotes(userId: Int, token: String) = viewModelScope.launch {
         notesListFragmentState.postValue(Resource.Loading())
+        delay(500L)
         val response = ApiInstance.api.getNotes(userId, token)
         notesListFragmentState.postValue(handleNotesResponse(response))
     }
@@ -47,12 +42,14 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
 
     fun getTimetables(userId: Int, token: String) = viewModelScope.launch {
         timetablesListFragmentState.postValue(Resource.Loading())
+        delay(500L)
         val response = ApiInstance.api.getTimetables(userId, token)
         timetablesListFragmentState.postValue(handleTimetablesResponse(response))
     }
 
     fun getSelectedTimetable(timetableId: Int, token: String) = viewModelScope.launch {
         timetableFragmentState.postValue(Resource.Loading())
+        delay(500L)
         val response = ApiInstance.api.getSelectedTimetable(timetableId, token)
         timetableFragmentState.postValue(handleSelectedTimetableResponse(response))
     }

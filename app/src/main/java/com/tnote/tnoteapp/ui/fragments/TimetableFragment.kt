@@ -53,8 +53,10 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
 
         ttElementsAdapter.setOnItemClickListener {
             Log.e("OnNavigateToTTEFrag", "id: ${it.id}", )
-            val ttElementId = Bundle()
-            ttElementId.putInt("ttElementId", it.id!!)
+            val ttElementId = Bundle().apply {
+                putInt("ttElementId", it.id!!)
+                putInt("timetableId", timetableId)
+            }
 
             Log.e("OnNavigateToTTEFrag_NavArgsBundle", "Value: $ttElementId", )
             findNavController().navigate(
@@ -86,14 +88,13 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
                     Log.e("OnTimetableFragmentStateResponse", "response data: ${response.data}")
 
                     response.data?.let { list ->
-                        var sortedList = list.sortedWith(
+                        ttElementsAdapter.differ.submitList(null)
+                        /*val sortedList = list.sortedWith(
                             compareBy(
                                 { it.day },
                                 { it.start.first() }
                             )
-                        )
-
-                        ttElementsAdapter.differ.submitList(null)
+                        )*/
                         ttElementsAdapter.differ.submitList(list)
                         Log.e("OnTimetableFragmentStateResponse", "RetList: $list")
                     }
