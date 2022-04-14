@@ -28,6 +28,10 @@ class ApplicationViewModel(sessionManager: SessionManager) : ViewModel() {
         notesListFragmentState.postValue(handleNotesResponse(response))
     }
 
+    /*fun getNote(noteId: Int, token: String) = viewModelScope.launch {
+        ApiInstance.api.getNote(noteId, token)
+    }*/
+
     fun createNote(body: Note, token: String) = viewModelScope.launch {
         ApiInstance.api.newNote(token, body)
     }

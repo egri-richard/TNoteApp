@@ -1,15 +1,12 @@
 package com.tnote.tnoteapp.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.databinding.FragmentNoteBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
@@ -56,24 +53,24 @@ class NoteFragment: Fragment(R.layout.fragment_note) {
         super.onDestroyView()
     }
 
-    private fun saveNoteChanges(note: Note) {
-        note.title = binding.etShownNoteTitle.text.toString()
+    private fun saveNoteChanges(data: Note) {
+        data.title = binding.etShownNoteTitle.text.toString()
         if (binding.etShownNoteContent.text.toString().isEmpty()) {
-            note.content = ""
+            data.content = ""
         } else {
-            note.content = binding.etShownNoteContent.text.toString()
+            data.content = binding.etShownNoteContent.text.toString()
         }
 
-        if (note.id == null) {
+        if (data.id == null) {
             viewModel.createNote(
-                note,
+                data,
                 sessionManager.getAuthToken()
             )
         } else {
             viewModel.updateNote(
-                note.id,
+                data.id,
                 sessionManager.getAuthToken(),
-                note
+                data
             )
         }
     }

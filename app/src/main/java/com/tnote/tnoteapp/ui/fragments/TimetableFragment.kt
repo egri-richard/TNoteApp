@@ -16,6 +16,7 @@ import com.tnote.tnoteapp.R
 import com.tnote.tnoteapp.adapters.TTElementsAdapter
 import com.tnote.tnoteapp.databinding.FragmentTimetableBinding
 import com.tnote.tnoteapp.logic.ApplicationViewModel
+import com.tnote.tnoteapp.models.TTElement
 import com.tnote.tnoteapp.ui.ApplicationActivity
 import com.tnote.tnoteapp.util.Resource
 import com.tnote.tnoteapp.util.SessionManager
@@ -88,16 +89,11 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
                     Log.e("OnTimetableFragmentStateResponse", "response data: ${response.data}")
 
                     response.data?.let { list ->
-                        ttElementsAdapter.differ.submitList(null)
-                        /*val sortedList = list.sortedWith(
-                            compareBy(
-                                { it.day },
-                                { it.start.first() }
-                            )
-                        )*/
-                        ttElementsAdapter.differ.submitList(list)
+                        ttElementsAdapter.differ.submitList(sortTTList(list))
                         Log.e("OnTimetableFragmentStateResponse", "RetList: $list")
                     }
+
+                    binding.rvTTElements.smoothScrollToPosition(0)
                 }
                 is Resource.Error -> {
                     hideProgressBar()
@@ -165,5 +161,43 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
             .create()
 
         return dialog
+    }
+
+    private fun sortTTList(list: List<TTElement>): List<TTElement> {
+        val mappedList = list.map {
+            when(it.day) {
+                "Monday" -> it.day = "1"
+                "Tuesday" -> it.day = "2"
+                "Wednesday" -> it.day = "3"
+                "Thursday" -> it.day = "4"
+                "Friday" -> it.day = "5"
+                "Saturday" -> it.day = "6"
+                "Sunday" -> it.day = "7"
+            }
+        }
+
+        Log.e("OnTimetableListMapped", "list: $mappedList", )
+
+        val sortedList = list.sortedWith(
+            compareBy(
+                { it.day },
+                { it.start }
+            )
+        )
+
+        val finalList = sortedList.map {
+            when(it.day) {
+                "1" -> it.day = "Monday"
+                "2" -> it.day = "Tuesday"
+                "3" -> it.day = "Wednesday"
+                "4" -> it.day = "Thursday"
+                "5" -> it.day = "Friday"
+                "6" -> it.day = "Saturday"
+                "7" -> it.day = "Sunday"
+            }
+            it
+        }
+
+        return finalList
     }
 }
