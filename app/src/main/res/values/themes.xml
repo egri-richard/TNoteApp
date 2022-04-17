@@ -13,4 +13,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.TNoteApp.MainActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/tnote_mainactivity_design2</item>
+    </style>
+
+    <style name="Theme.TNoteApp.RegisterActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/tnote_register_design2</item>
+    </style>
+
+    <style name="Theme.TNoteApp.LoginActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/tnote_login_design2</item>
+    </style>
 </resources>
