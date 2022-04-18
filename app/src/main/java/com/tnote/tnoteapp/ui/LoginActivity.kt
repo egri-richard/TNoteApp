@@ -59,6 +59,10 @@ class LoginActivity : AppCompatActivity() {
                         "Wrong Credentials",
                         Snackbar.LENGTH_SHORT
                     ).show()
+
+                    response.data.let {
+                        Log.e("LoginActivity", "Response: $it", )
+                    }
                 }
                 is Resource.Loading -> {
                     showProgressBar()

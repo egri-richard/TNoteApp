@@ -166,7 +166,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         ttElement.title = binding.etTTETitle.text.toString()
         ttElement.description = binding.etTTEDescription.text.toString()
         ttElement.day = binding.spDays.selectedItem.toString()
-        ttElement.repeating = true //binding.cbRepeating.isChecked
+        ttElement.repeating = binding.cbRepeating.isChecked
 
         if (selectedElementId == 0) {
             viewModel.createTTElement(
@@ -191,7 +191,7 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
             binding.tvEnd.text = end
             binding.etTTETitle.setText(title)
             binding.etTTEDescription.setText(description)
-            //binding.cbRepeating.isChecked = repeating
+            binding.cbRepeating.isChecked = repeating
         }
     }
 
