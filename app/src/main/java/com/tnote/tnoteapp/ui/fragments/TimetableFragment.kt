@@ -97,6 +97,7 @@ class TimetableFragment: Fragment(R.layout.fragment_timetable) {
                 }
                 is Resource.Error -> {
                     hideProgressBar()
+
                     Snackbar.make(
                         binding.root,
                         "Unexpected Error",
