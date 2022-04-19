@@ -43,8 +43,12 @@ class NoteFragment: Fragment(R.layout.fragment_note) {
         binding.etShownNoteTitle.setText(note.title)
 
         binding.btnSaveShownNote.setOnClickListener {
-            saveNoteChanges(note)
-            Toast.makeText(requireContext(), "Note saved", Toast.LENGTH_SHORT).show()
+            if (binding.etShownNoteTitle.text.isEmpty()) {
+                Toast.makeText(requireContext(), "Title is required", Toast.LENGTH_SHORT).show()
+            } else {
+                saveNoteChanges(note)
+                Toast.makeText(requireContext(), "Note saved", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

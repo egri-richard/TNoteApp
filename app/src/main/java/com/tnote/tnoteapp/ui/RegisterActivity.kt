@@ -5,6 +5,7 @@ import android.media.ResourceBusyException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.databinding.ActivityRegisterBinding
@@ -30,11 +31,19 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.btnRegister.setOnClickListener {
-            viewModel.register(
-                binding.etRegisterName.text.toString(),
-                binding.etRegisterEmail.text.toString(),
-                binding.etRegisterPassword.text.toString()
-            )
+            val name = binding.etRegisterName.text.toString()
+            val email = binding.etRegisterEmail.text.toString()
+            val passwd = binding.etRegisterPassword.text.toString()
+
+            if(name.isEmpty() || email.isEmpty() || passwd.isEmpty()) {
+                Toast.makeText(this, "Please fill in every field", Toast.LENGTH_SHORT).show()
+            } else if (!email.contains('@') || !email.contains('.')) {
+                Toast.makeText(this, "Please enter a correct email address", Toast.LENGTH_SHORT).show()
+            } else if (passwd.length < 8) {
+                Toast.makeText(this, "Password needs to be at least 8 characters", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.register(name, email, passwd)
+            }
         }
 
         viewModel.registerActivityState.observe(this, Observer { response ->

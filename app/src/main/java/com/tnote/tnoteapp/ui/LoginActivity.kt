@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.tnote.tnoteapp.databinding.ActivityLoginBinding
 import com.tnote.tnoteapp.logic.LoginViewModel
@@ -29,10 +30,20 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            loginViewModel.login(
-                binding.etEmail.text.toString(),
-                binding.etPassword.text.toString()
-            )
+            val email = binding.etEmail.text.toString()
+            val passwd = binding.etPassword.text.toString()
+
+            if(email.isEmpty() || passwd.isEmpty()) {
+                Toast.makeText(this, "Please fill in every field", Toast.LENGTH_SHORT).show()
+            } else if (!email.contains('@') || !email.contains('.')) {
+                Toast.makeText(this, "Please enter a correct email address", Toast.LENGTH_SHORT).show()
+            } else if (passwd.length < 8) {
+                Toast.makeText(this, "Password needs to be at least 8 characters", Toast.LENGTH_SHORT).show()
+            } else {
+                loginViewModel.login(email, passwd)
+            }
+
+
         }
 
         loginViewModel.loginActivityState.observe(this) { response ->
@@ -41,8 +52,8 @@ class LoginActivity : AppCompatActivity() {
                     hideProgressBar()
 
                     response.data?.let {
-                        Log.e("LoginActivty", "Response: $it", )
-                        Log.e("LoginActivty", "Response Id: ${it.user.id}", )
+                        Log.e("LoginActivity", "Response: $it", )
+                        Log.e("LoginActivity", "Response Id: ${it.user.id}", )
                         sessionManager.saveCredentials(
                             it.token,
                             it.user.id

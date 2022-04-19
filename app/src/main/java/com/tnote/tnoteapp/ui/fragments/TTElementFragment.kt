@@ -71,8 +71,12 @@ class TTElementFragment : Fragment(), TimePickerDialog.OnTimeSetListener {
         }
 
         binding.fabSaveTTElement.setOnClickListener {
-            saveTTElementChanges(ttElement)
-            Toast.makeText(requireContext(), "Event saved", Toast.LENGTH_SHORT).show()
+            if (binding.etTTETitle.text!!.isEmpty()) {
+                Toast.makeText(requireContext(), "Title required", Toast.LENGTH_SHORT).show()
+            } else {
+                saveTTElementChanges(ttElement)
+                Toast.makeText(requireContext(), "Event saved", Toast.LENGTH_SHORT).show()
+            }
         }
 
 

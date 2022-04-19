@@ -47,7 +47,11 @@ class TimetablesListFragment: Fragment(R.layout.fragment_timetableslist) {
         getData()
 
         binding.btnAddNewTimetable.setOnClickListener {
-            addNewTimetable()
+            if(binding.etNewTimetableName.text.isEmpty()) {
+                Toast.makeText(requireContext(), "Name required", Toast.LENGTH_SHORT).show()
+            } else {
+                addNewTimetable()
+            }
         }
 
         timetablesAdapter.setOnItemClickListener {
