@@ -1,6 +1,7 @@
 package com.tnote.tnoteapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,8 @@ class NoteFragment: Fragment(R.layout.fragment_note) {
 
         binding.etShownNoteTitle.setText(note.title)
 
+        binding.etShownNoteContent.setText(note.content)
+
         binding.btnSaveShownNote.setOnClickListener {
             if (binding.etShownNoteTitle.text.isEmpty()) {
                 Toast.makeText(requireContext(), "Title is required", Toast.LENGTH_SHORT).show()
@@ -59,11 +62,15 @@ class NoteFragment: Fragment(R.layout.fragment_note) {
 
     private fun saveNoteChanges(data: Note) {
         data.title = binding.etShownNoteTitle.text.toString()
+
+        Log.e("note content", "is Empty: ${binding.etShownNoteContent.text.toString().isEmpty()}", )
         if (binding.etShownNoteContent.text.toString().isEmpty()) {
             data.content = ""
         } else {
             data.content = binding.etShownNoteContent.text.toString()
         }
+
+        Log.e("saved note", "Note: $data", )
 
         if (data.id == null) {
             viewModel.createNote(
